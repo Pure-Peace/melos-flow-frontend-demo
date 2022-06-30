@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import * as fcl from "@onflow/fcl";
-import styled from "styled-components";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { Code, Card, Button, Input, Panel } from "./Components";
 
 const {
   MelosMarketplaceSDK,
@@ -16,88 +16,6 @@ const {
   toUFix64,
   CommonSDK,
 } = require("@melosstudio/flow-sdk/dist/index.js");
-
-const Card = styled.div`
-  margin: 10px 5px;
-  padding: 10px;
-  border: 1px solid #d2e3ff;
-  border-radius: 5px;
-`;
-
-const Header = styled.div`
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 5px;
-`;
-
-const Code = styled.pre`
-  background: #e7f0ff;
-  border-radius: 5px;
-  max-height: 300px;
-  overflow-y: auto;
-  padding: 5px;
-  color: #343d4c;
-`;
-
-const Button = styled.button`
-  display: block;
-  margin: 10px;
-  padding: 10px;
-  font-size: 14px;
-  font-weight: bold;
-  width: calc(100% - 20px);
-  background: #2e82ff;
-  color: #ffffff;
-  border-radius: 6px;
-  line-height: 25px;
-  text-align: center;
-  border: none;
-  transition: 0.2s ease;
-  cursor: pointer;
-
-  :hover {
-    background: #2b76e7;
-  }
-
-  :active {
-    background: #2468cd;
-  }
-
-  :disabled,
-  [disabled] {
-    border: 1px solid #999999;
-    background-color: #cccccc;
-    color: #666666;
-    cursor: not-allowed !important;
-  }
-`;
-
-const Input = styled.input`
-  outline-style: none;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  padding: 13px 14px;
-  font-size: 14px;
-  line-height: "22px";
-  padding: "5px";
-  transition: 0.2s ease;
-
-  :focus {
-    border-color: #2e82ff;
-    outline: 0;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-      0 0 8px rgba(102, 175, 233, 0.6);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-      0 0 8px rgba(102, 175, 233, 0.6);
-  }
-`;
-
-const Panel = styled.div`
-  background-color: #e7f0ff;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 10px;
-`;
 
 const MELOS_NFT_ADDRESS = "0xd9a922f2f589c50c";
 const MELOS_MARKETPLACE = "0xd9a922f2f589c50c";
@@ -220,7 +138,7 @@ const SdkExample = () => {
           {JSON.stringify(result, null, 2)}
         </SyntaxHighlighter>
       );
-      setStatus("Exec done");
+      setStatus(`${execType} "${name}" exec done`);
     } catch (error) {
       console.error(error);
       setLog(
@@ -286,7 +204,7 @@ const SdkExample = () => {
 
   const createSdkFunctionsCard = (sdkName, buildedSdk) => {
     return (
-      <Card style={{ overflow: "auto", width: "700px" }}>
+      <Card style={{ overflow: "auto", position: "relative", width: "700px" }}>
         {["scripts", "transactions"].map((type) => (
           <Card key={`${type}`} style={{ padding: "5px", width: "300px" }}>
             <div
@@ -319,7 +237,7 @@ const SdkExample = () => {
         )}
         {createSdkFunctionsCard("MelosNftSDK", melosNftSDKBuilded)}
         {createSdkFunctionsCard("CommonSDK", commonSDKBuilded)}
-        <Card style={{ width: "calc(100% - 480px)" }}>
+        <Card style={{ width: "calc(100% - 300px)" }}>
           <div
             style={{ fontSize: "18px", fontWeight: "bold", color: "#14428A" }}
           >

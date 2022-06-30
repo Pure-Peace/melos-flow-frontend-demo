@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import * as fcl from "@onflow/fcl";
 
-const Card = styled.div`
-  margin: 10px 5px;
-  padding: 10px;
-  border: 1px solid #c0c0c0;
-  border-radius: 5px;
-`;
+import { Card, Button } from "./Components";
 
 const SignInOutButton = ({ user }) => {
   const signInOrOut = async (event) => {
@@ -28,25 +22,15 @@ const SignInOutButton = ({ user }) => {
   );
 
   return (
-    <div style={{ height: "150px" }}>
-      <div style={{ fontSize: "18px", fontWeight: "bold" }}>
+    <div style={{ height: "150px", color: "#14428A" }}>
+      <div style={{ fontSize: "16px", fontWeight: "bold" }}>
         {user.addr ? "LoggedIn" : "Not login"}
       </div>
       {user.addr && userCard}
       <div>
-        <button
-          onClick={signInOrOut}
-          style={{
-            display: "block",
-            margin: "10px 10px",
-            padding: "10px",
-            fontSize: "14px",
-            fontWeight: "bold",
-            cursor: "pointer",
-          }}
-        >
+        <Button onClick={signInOrOut}>
           {user.loggedIn ? `Sign Out` : "Sign In/Up"}
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -67,7 +51,7 @@ const CurrentUser = () => {
   );
 
   return (
-    <Card style={{ padding: "20px" }}>
+    <Card style={{ padding: "20px", width: "500px" }}>
       <SignInOutButton user={user} />
     </Card>
   );
