@@ -5,6 +5,20 @@ import { createAuth } from "@melosstudio/flow-sdk/dist/index.js";
 
 import { Card, Button, Input, Select, Option } from "./Components";
 
+const putTestnet = () =>
+  fcl
+    .config()
+    .put("accessNode.api", "https://access-testnet.onflow.org")
+    .put("challenge.handshake", "https://flow-wallet-testnet.blocto.app/authn");
+
+const putMainnet = () =>
+  fcl
+    .config()
+    .put("accessNode.api", "https://flow-access-mainnet.portto.io")
+    .put("challenge.handshake", "https://flow-wallet.blocto.app/authn");
+
+putTestnet();
+
 const BloctoUserPanel = ({ useNetwork, user }) => {
   const [network] = useNetwork();
   const signInOrOut = async (event) => {
@@ -46,32 +60,21 @@ const BloctoUserPanel = ({ useNetwork, user }) => {
 };
 
 const NetworkSwitchPanel = ({ useNetwork }) => {
-  const [network, setNetwork] = useNetwork();
+  const [network, setNetwork] = useNetwork("Testnet");
   const [accessNodeInput, setAccessNodeInput] = useState("");
   const [accessNodeCustom, setAccessNodeCustom] = useState("");
+
   const configNetwork = (network) => {
     if (network === "Testnet") {
-      fcl
-        .config()
-        .put("accessNode.api", "https://access-testnet.onflow.org")
-        .put(
-          "challenge.handshake",
-          "https://flow-wallet-testnet.blocto.app/authn"
-        );
+      putTestnet();
     } else if (network === "Mainnet") {
-      fcl
-        .config()
-        .put("accessNode.api", "https://flow-access-mainnet.portto.io")
-        .put("challenge.handshake", "https://flow-wallet.blocto.app/authn");
+      putMainnet();
     } else if (network === "Custom" && accessNodeCustom) {
       fcl.config().put("accessNode.api", accessNodeCustom);
     }
 
     setNetwork(network);
   };
-  if (!network) {
-    configNetwork("Testnet");
-  }
   return (
     <Card style={{ padding: "20px", width: "350px" }}>
       <div style={{ height: "150px", color: "#14428A" }}>
@@ -115,9 +118,9 @@ const NetworkSwitchPanel = ({ useNetwork }) => {
             <Button
               disabled={network !== "Custom"}
               style={{ marginTop: "10px" }}
-              onClick={() => {
+              onClick={(ev) => {
                 setAccessNodeCustom(accessNodeInput);
-                fcl.config().put("accessNode.api", accessNodeCustom);
+                fcl.config().put("accessNode.api", accessNodeInput);
               }}
             >
               Use custom network
