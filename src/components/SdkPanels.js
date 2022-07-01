@@ -82,6 +82,12 @@ export const SdkPanels = ({ auth, user, useConsole }) => {
             param = Number(param);
           } else if (type.includes("Fix")) {
             param = toUFix64(param);
+          } else {
+            try {
+              param = JSON.parse(param);
+            } catch (_) {
+              param = [];
+            }
           }
         }
         acc.push(param);
@@ -94,10 +100,19 @@ export const SdkPanels = ({ auth, user, useConsole }) => {
     setLog(<div>{`Executing ${execType} "${name}"...`}</div>);
 
     try {
-      const result =
-        execType === "scripts"
-          ? (await method.func(...params)).unwrap()
-          : await (await method.func(...params)).assertOk("seal");
+      let result;
+      if (execType === "scripts") {
+        result = (await method.func(...params)).unwrap();
+      } else {
+        const tx = (await method.func(...params)).unwrap();
+        console.log("Transactions sended, id: ", tx.txId);
+        setStatus(`Waiting for seal...`);
+        setLog(
+          <div>{`Transaction "${tx.txId}" sended, waiting for seal...`}</div>
+        );
+        result = await tx.seal();
+      }
+
       console.log("sdk result: ", result);
       setLog(
         <SyntaxHighlighter language="json" style={docco}>
