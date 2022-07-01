@@ -26,9 +26,9 @@ export const BloctoPanel = ({ network, user }) => {
     <Card style={{ padding: "20px", width: "350px" }}>
       <div style={{ height: "150px", color: "#14428A" }}>
         <div style={{ fontSize: "16px", fontWeight: "bold" }}>
-          {network != "Custom" && user.addr ? "LoggedIn" : "Not login"}
+          {network !== "Custom" && user.addr ? "LoggedIn" : "Not login"}
         </div>
-        {network != "Custom" && user.addr && userCard}
+        {network !== "Custom" && user.addr && userCard}
         <div style={{ padding: "20px 20px 0 20px" }}>
           <Button onClick={signInOrOut} disabled={network === "Custom"}>
             {network === "Custom"
