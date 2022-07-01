@@ -27,7 +27,7 @@ export const AuthManagementPanel = ({ useAuth }) => {
       return;
     }
     const keyId = Number(keyIdStr);
-    if (keyId.isNaN()) {
+    if (isNaN(keyId)) {
       setErr("Invalid keyId Number");
       return;
     }
