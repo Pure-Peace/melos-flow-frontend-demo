@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.18.6",
-    "@melosstudio/flow-sdk": "1.1.17",
+    "@melosstudio/flow-sdk": "1.1.19",
     "@onflow/fcl": "^0.0.78",
     "customize-cra": "^1.0.0",
     "flow-cadut": "^0.1.16-alpha.4",
