@@ -82,13 +82,11 @@ export const SdkPanels = ({ auth, user, useConsole }) => {
             param = Number(param);
           } else if (type.includes("Fix")) {
             param = toUFix64(param);
-          } else {
-            try {
-              param = JSON.parse(param);
-            } catch (_) {
-              param = [];
-            }
           }
+        } else {
+          try {
+            param = JSON.parse(param);
+          } catch (_) {}
         }
         acc.push(param);
         return acc;
