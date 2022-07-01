@@ -6,22 +6,32 @@ import { Card, Select, Input, Button } from "./Common";
 
 import { putTestnet, putMainnet } from "../utils";
 
-export const NetworkSwitchPanel = ({ useNetwork }) => {
+export const NetworkSwitchPanel = ({ user, useNetwork }) => {
   const [network, setNetwork] = useNetwork();
   const [accessNodeInput, setAccessNodeInput] = useState("");
   const [accessNodeCustom, setAccessNodeCustom] = useState("");
 
-  const configNetwork = (network) => {
-    if (network === "Testnet") {
+  const configNetwork = (n) => {
+    if (n === "Testnet") {
+      if (network === "Mainnet") {
+        if (user.loggedIn) {
+          fcl.unauthenticate();
+        }
+      }
       putTestnet();
-    } else if (network === "Mainnet") {
+    } else if (n === "Mainnet") {
+      if (network === "Testnet") {
+        if (user.loggedIn) {
+          fcl.unauthenticate();
+        }
+      }
       putMainnet();
-    } else if (network === "Custom" && accessNodeCustom) {
+    } else if (n === "Custom" && accessNodeCustom) {
       fcl.config().put("accessNode.api", accessNodeCustom);
     }
 
-    if (network) {
-      setNetwork(network);
+    if (n) {
+      setNetwork(n);
     }
   };
   return (

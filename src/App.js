@@ -51,7 +51,7 @@ function App() {
     <Main>
       <div style={{ display: "flex" }}>
         <BloctoPanel network={network} user={user} />
-        <NetworkSwitchPanel useNetwork={useNetwork} />
+        <NetworkSwitchPanel useNetwork={useNetwork} user={user} />
         <AuthManagementPanel useAuth={useAuth} />
         <SelectAuthPanel user={user} useAuth={useAuth} />
       </div>
