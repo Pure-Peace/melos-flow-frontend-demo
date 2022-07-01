@@ -5,7 +5,8 @@ import { createAuth } from "@melosstudio/flow-sdk/dist/index.js";
 
 import { Card, Button, Input, Select, Option } from "./Components";
 
-const BloctoUserPanel = ({ user }) => {
+const BloctoUserPanel = ({ useNetwork, user }) => {
+  const [network] = useNetwork();
   const signInOrOut = async (event) => {
     event.preventDefault();
 
@@ -24,16 +25,104 @@ const BloctoUserPanel = ({ user }) => {
   );
 
   return (
-    <Card style={{ padding: "20px", width: "500px" }}>
+    <Card style={{ padding: "20px", width: "350px" }}>
       <div style={{ height: "150px", color: "#14428A" }}>
         <div style={{ fontSize: "16px", fontWeight: "bold" }}>
-          {user.addr ? "LoggedIn" : "Not login"}
+          {network != "Custom" && user.addr ? "LoggedIn" : "Not login"}
         </div>
-        {user.addr && userCard}
+        {network != "Custom" && user.addr && userCard}
         <div style={{ padding: "20px 20px 0 20px" }}>
-          <Button onClick={signInOrOut}>
-            {user.loggedIn ? `Sign Out` : "Sign In/Up"}
+          <Button onClick={signInOrOut} disabled={network === "Custom"}>
+            {network === "Custom"
+              ? "Not support custom network"
+              : user.loggedIn
+              ? `Sign Out`
+              : "Sign In/Up"}
           </Button>
+        </div>
+      </div>
+    </Card>
+  );
+};
+
+const NetworkSwitchPanel = ({ useNetwork }) => {
+  const [network, setNetwork] = useNetwork();
+  const [accessNodeInput, setAccessNodeInput] = useState("");
+  const [accessNodeCustom, setAccessNodeCustom] = useState("");
+  const configNetwork = (network) => {
+    if (network === "Testnet") {
+      fcl
+        .config()
+        .put("accessNode.api", "https://access-testnet.onflow.org")
+        .put(
+          "challenge.handshake",
+          "https://flow-wallet-testnet.blocto.app/authn"
+        );
+    } else if (network === "Mainnet") {
+      fcl
+        .config()
+        .put("accessNode.api", "https://flow-access-mainnet.portto.io")
+        .put("challenge.handshake", "https://flow-wallet.blocto.app/authn");
+    } else if (network === "Custom" && accessNodeCustom) {
+      fcl.config().put("accessNode.api", accessNodeCustom);
+    }
+
+    setNetwork(network);
+  };
+  if (!network) {
+    configNetwork("Testnet");
+  }
+  return (
+    <Card style={{ padding: "20px", width: "350px" }}>
+      <div style={{ height: "150px", color: "#14428A" }}>
+        <div style={{ fontSize: "16px", fontWeight: "bold" }}>
+          Switch Network ({network})
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            padding: "20px 20px 0 20px",
+          }}
+        >
+          <Select
+            value={network}
+            onChange={(ev) => {
+              ev.persist();
+              const v = ev.target.value;
+              configNetwork(v);
+            }}
+          >
+            <option value="Testnet">Testnet</option>
+            <option value="Mainnet">Mainnet</option>
+            <option value="Custom">
+              Custom {accessNodeCustom ? `(${accessNodeCustom})` : ""}
+            </option>
+          </Select>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginTop: "10px",
+            }}
+          >
+            <Input
+              disabled={network !== "Custom"}
+              placeholder="accessNode url"
+              value={accessNodeInput}
+              onChange={(ev) => setAccessNodeInput(ev.target.value)}
+            ></Input>
+            <Button
+              disabled={network !== "Custom"}
+              style={{ marginTop: "10px" }}
+              onClick={() => {
+                setAccessNodeCustom(accessNodeInput);
+                fcl.config().put("accessNode.api", accessNodeCustom);
+              }}
+            >
+              Use custom network
+            </Button>
+          </div>
         </div>
       </div>
     </Card>
@@ -197,6 +286,9 @@ const CurrentUser = ({ useAuth }) => {
   const [auth, setAuth] = useAuth();
   const [user, setUser] = useState({});
 
+  const [network, setNetwork] = useState("");
+  const useNetwork = () => [network, setNetwork];
+
   useEffect(
     () =>
       fcl.currentUser().subscribe((user) =>
@@ -210,7 +302,8 @@ const CurrentUser = ({ useAuth }) => {
 
   return (
     <div style={{ display: "flex" }}>
-      <BloctoUserPanel user={user} />
+      <BloctoUserPanel useNetwork={useNetwork} user={user} />
+      <NetworkSwitchPanel useNetwork={useNetwork} />
       <AddAuthPanel useAuth={useAuth} />
       <SelectAuthPanel user={user} useAuth={useAuth} />
     </div>
