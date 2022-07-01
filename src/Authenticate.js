@@ -60,7 +60,7 @@ const BloctoUserPanel = ({ useNetwork, user }) => {
 };
 
 const NetworkSwitchPanel = ({ useNetwork }) => {
-  const [network, setNetwork] = useNetwork("Testnet");
+  const [network, setNetwork] = useNetwork();
   const [accessNodeInput, setAccessNodeInput] = useState("");
   const [accessNodeCustom, setAccessNodeCustom] = useState("");
 
@@ -73,7 +73,9 @@ const NetworkSwitchPanel = ({ useNetwork }) => {
       fcl.config().put("accessNode.api", accessNodeCustom);
     }
 
-    setNetwork(network);
+    if (network) {
+      setNetwork(network);
+    }
   };
   return (
     <Card style={{ padding: "20px", width: "350px" }}>
@@ -289,7 +291,7 @@ const CurrentUser = ({ useAuth }) => {
   const [auth, setAuth] = useAuth();
   const [user, setUser] = useState({});
 
-  const [network, setNetwork] = useState("");
+  const [network, setNetwork] = useState("Testnet");
   const useNetwork = () => [network, setNetwork];
 
   useEffect(
