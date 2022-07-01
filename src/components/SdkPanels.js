@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import * as fcl from "@onflow/fcl";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import { Code, Card, Button, Input, Panel } from "./Components";
+
+import { Card, Button, Input, Panel } from "./Common";
+
+import { buildSdk } from "../utils";
 
 const {
   MelosMarketplaceSDK,
@@ -10,7 +13,6 @@ const {
   TESTNET_BASE_ADDRESS_MAP,
   flowTokenReplaceMap,
   melosNftReplaceMap,
-  ListingType,
   getTemplateInfo,
   sdkCode,
   toUFix64,
@@ -42,57 +44,18 @@ const melosMarketplaceSDK = new MelosMarketplaceSDK(
 const melosNftSDK = new MelosNFTSDK(TESTNET_ADDRESS_MAP, TESTNET_REPLACE_MAP);
 const commonSDK = new CommonSDK(TESTNET_ADDRESS_MAP, TESTNET_REPLACE_MAP);
 
-const getSdkMethodList = (sdk) => {
-  const proto = Object.getPrototypeOf(sdk);
-  return Object.getOwnPropertyNames(proto).filter(
-    (i) => typeof proto[i] === "function" && i !== "constructor"
-  );
+const buildedSdks = {
+  MelosMarketplaceSDK: buildSdk(melosMarketplaceSDK),
+  MelosNftSDK: buildSdk(melosNftSDK),
+  CommonSDK: buildSdk(commonSDK),
 };
 
-const getSdkFuncParams = (func) => {
-  const params = func
-    .toString()
-    .match(/.*?\(([^)]*)\)/)[1]
-    .replace(/ /g, "")
-    .split(",");
-  return {
-    type: params.includes("auth") ? "transaction" : "script",
-    params: params.filter((p) => !["auth", "options"].includes(p)),
-  };
-};
+export const SdkPanels = ({ auth, user, useConsole }) => {
+  const { setStatus, setLog } = useConsole();
 
-const buildSdk = (sdk) =>
-  getSdkMethodList(sdk).reduce(
-    (acc, cur) => {
-      const params = getSdkFuncParams(sdk[cur]);
-      const typed =
-        params.type === "transaction" ? acc.transactions : acc.scripts;
-      typed[cur] = {
-        func: sdk[cur].bind(sdk),
-        ...params,
-      };
-      return acc;
-    },
-    { sdk, transactions: {}, scripts: {} }
-  );
-
-const melosMarketplaceSDKBuilded = buildSdk(melosMarketplaceSDK);
-const melosNftSDKBuilded = buildSdk(melosNftSDK);
-const commonSDKBuilded = buildSdk(commonSDK);
-
-const SdkExample = ({ useAuth }) => {
-  const [auth, setAuth] = useAuth();
-  const [user, setUser] = useState({});
   const [sdkFuncParams, setSdkFuncParams] = useState({});
 
   const hasAuth = () => !!auth.current.auth || !!user?.addr;
-
-  useEffect(
-    () => fcl.currentUser().subscribe((user) => setUser({ ...user })),
-    []
-  );
-  const [status, setStatus] = useState("No status");
-  const [log, setLog] = useState(null);
 
   const execWrapper = async (
     event,
@@ -205,7 +168,15 @@ const SdkExample = ({ useAuth }) => {
 
   const createSdkFunctionsCard = (sdkName, buildedSdk) => {
     return (
-      <Card style={{ overflow: "auto", position: "relative", width: "700px" }}>
+      <Card
+        key={sdkName}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          overflow: "auto",
+          position: "relative",
+        }}
+      >
         {["scripts", "transactions"].map((type) => (
           <Card key={`${type}`} style={{ padding: "5px", width: "300px" }}>
             <div
@@ -228,47 +199,10 @@ const SdkExample = ({ useAuth }) => {
   };
 
   return (
-    <div>
-      <div style={{ display: "flex", height: "700px" }}>
-        {createSdkFunctionsCard(
-          "MelosMarketplaceSDK",
-          melosMarketplaceSDKBuilded
-        )}
-        {createSdkFunctionsCard("MelosNftSDK", melosNftSDKBuilded)}
-        {createSdkFunctionsCard("CommonSDK", commonSDKBuilded)}
-        <Card style={{ width: "calc(100% - 300px)" }}>
-          <div
-            style={{ fontSize: "18px", fontWeight: "bold", color: "#14428A" }}
-          >
-            Console
-          </div>
-          <Code>{status}</Code>
-          <div
-            style={{ fontSize: "18px", fontWeight: "bold", color: "#14428A" }}
-          >
-            Results
-          </div>
-
-          <Code
-            style={{
-              maxHeight: "100%",
-              height: "calc(100% - 120px)",
-              width: "100%",
-            }}
-          >
-            <div
-              style={{
-                whiteSpace: "pre-wrap",
-                wordBreak: "break-word",
-              }}
-            >
-              {log ? log : "None"}
-            </div>
-          </Code>
-        </Card>
-      </div>
-    </div>
+    <>
+      {Object.entries(buildedSdks).map(([k, v]) =>
+        createSdkFunctionsCard(k, v)
+      )}
+    </>
   );
 };
-
-export default SdkExample;
