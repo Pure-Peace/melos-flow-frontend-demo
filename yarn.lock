@@ -1498,15 +1498,15 @@
   resolved "https://registry.npmmirror.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@melosstudio/flow-sdk@1.1.15":
-  version "1.1.15"
-  resolved "https://registry.npmjs.org/@melosstudio/flow-sdk/-/flow-sdk-1.1.15.tgz#e3a60e892e6a1275f74536df90a743cab35a7c2a"
-  integrity sha512-B/wYP4rj6LfX9QCGx1i215QEz2aqpOc38X1PB8AcUFx0+HPTT2qJvt9+bj0ZowW3PVs9mMAIPshm9rIsT1XEKg==
+"@melosstudio/flow-sdk@1.1.16":
+  version "1.1.16"
+  resolved "https://registry.npmjs.org/@melosstudio/flow-sdk/-/flow-sdk-1.1.16.tgz#6f8e531ad003225d6d46701f29ace540aa9832ff"
+  integrity sha512-yndRkx2uX8xoQyUu4YiHm0EI09jmQkxjAbJSkW1Yi42Nv/Q52PkJaBc50f+tgr0rPmd0hqGxAfK3ZgxBK1Ih5w==
   dependencies:
     "@onflow/fcl" "^0.0.78"
     "@onflow/types" "0.0.6"
+    buffer "^6.0.3"
     elliptic "^6.5.4"
-    tslib "^2.4.0"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -1521,28 +1521,12 @@
   resolved "https://registry.npmmirror.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@onflow/config@0.0.2", "@onflow/config@^0.0.2":
+"@onflow/config@0.0.2":
   version "0.0.2"
   resolved "https://registry.npmmirror.com/@onflow/config/-/config-0.0.2.tgz#caed7df27e9258ce2d4eae43f5e6f22caa119547"
   integrity sha512-H/+yrAalzEnMWkubiWsDdWytKSzd+OfRCddTlaRUelxfXhcfw2QWegH9N8EzeKfKXcQ6PLzvu9vQwhFxCZTE8Q==
   dependencies:
     "@onflow/util-actor" "0.0.2"
-
-"@onflow/fcl@^0.0.71":
-  version "0.0.71"
-  resolved "https://registry.npmmirror.com/@onflow/fcl/-/fcl-0.0.71.tgz#32dbc30f4291095ae9bc877127336618c5494074"
-  integrity sha512-RMfm8BEt1kMdrQCBOAXPfBk+KPwemtwP78c0rA3PBg6maB3h96KYJSGW7+Fv5jmx/xZHFuvmk2R9nGv29pJ3DQ==
-  dependencies:
-    "@onflow/config" "0.0.2"
-    "@onflow/interaction" "0.0.11"
-    "@onflow/rlp" "0.0.3"
-    "@onflow/sdk" "0.0.47"
-    "@onflow/types" "^0.0.4"
-    "@onflow/util-actor" "0.0.2"
-    "@onflow/util-address" "0.0.0"
-    "@onflow/util-invariant" "0.0.0"
-    "@onflow/util-template" "0.0.1"
-    "@onflow/util-uid" "0.0.1"
 
 "@onflow/fcl@^0.0.78":
   version "0.0.78"
@@ -1577,21 +1561,6 @@
   resolved "https://registry.npmmirror.com/@onflow/rlp/-/rlp-0.0.3.tgz#42e10944309732bfd9acca79710c8210b9aabd4c"
   integrity sha512-oAf0VEiMjX8eC6Vd66j1BdGYTHOM6UBaS/sLSScnc7bKX5gICqe2gtEsCeJVE9rUzRk3GD3JqXRnPAW6YFWd/Q==
 
-"@onflow/sdk@0.0.47":
-  version "0.0.47"
-  resolved "https://registry.npmmirror.com/@onflow/sdk/-/sdk-0.0.47.tgz#bc4961d0019ccf226ed1a180bfdab64087fe4b07"
-  integrity sha512-ouZL5aze9biIJfJeNUzbc4oU54ljTEFFcEXFkR13XBdMkVr3kJ7aA3EkB1T0+iezLEqxV8dkTuDnpCNmMjqJEQ==
-  dependencies:
-    "@improbable-eng/grpc-web" "^0.14.0"
-    "@improbable-eng/grpc-web-node-http-transport" "^0.14.0"
-    "@onflow/config" "^0.0.2"
-    "@onflow/protobuf" "^0.1.8"
-    "@onflow/rlp" "^0.0.3"
-    "@onflow/util-address" "^0.0.0"
-    "@onflow/util-invariant" "^0.0.0"
-    "@onflow/util-template" "0.0.1"
-    deepmerge "^4.2.2"
-
 "@onflow/sdk@0.0.56":
   version "0.0.56"
   resolved "https://registry.npmmirror.com/@onflow/sdk/-/sdk-0.0.56.tgz#6f4528b8c3a78207ec5cb35d1133ff466e950428"
@@ -1612,11 +1581,6 @@
   version "0.0.6"
   resolved "https://registry.npmmirror.com/@onflow/types/-/types-0.0.6.tgz#4fb20754565da4995a1b0b71b01210947f899841"
   integrity sha512-2eBrmqiFO37EUOJvzksygP8Wu6lL/m9az36AF0qYdGQW/79KGCHBCchUsIzxyGt8UDXl/dgnIcMkiTH7tWZqXg==
-
-"@onflow/types@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.npmmirror.com/@onflow/types/-/types-0.0.4.tgz#d4a9c3e301d23182dd256b73d3679c952fe653f0"
-  integrity sha512-47r0qTM45mR7FSvyEE0njGljkpgy3MCf/2W82pfZ/PTFGWr1nsGV/4j2bUfK9Sry4Ymz2W20iRZVP3xpqOhqGw==
 
 "@onflow/util-actor@0.0.2":
   version "0.0.2"
@@ -3068,7 +3032,7 @@ buffer-xor@^1.0.3:
   resolved "https://registry.npmmirror.com/buffer-xor/-/buffer-xor-1.0.3.tgz#26e61ed1422fb70dd42e6e36729ed51d855fe8d9"
   integrity sha512-571s0T7nZWK6vB67HI5dyUF7wXiNcfaPPPTl6zYCNApANjIvYJTg7hlud/+cJpdAhS7dVzqMLmfhfHR3rAcOjQ==
 
-buffer@6.0.3:
+buffer@6.0.3, buffer@^6.0.3:
   version "6.0.3"
   resolved "https://registry.npmmirror.com/buffer/-/buffer-6.0.3.tgz#2ace578459cc8fbe2a70aaa8f52ee63b6a74c6c6"
   integrity sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==

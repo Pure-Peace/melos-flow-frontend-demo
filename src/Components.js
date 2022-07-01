@@ -75,6 +75,26 @@ export const Input = styled.input`
   }
 `;
 
+export const Select = styled.select`
+  outline-style: none;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 13px 14px;
+  font-size: 14px;
+  line-height: "22px";
+  padding: "5px";
+  transition: 0.2s ease;
+
+  :focus {
+    border-color: #2e82ff;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+      0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+      0 0 8px rgba(102, 175, 233, 0.6);
+  }
+`;
+
 export const Panel = styled.div`
   background-color: #e7f0ff;
   padding: 10px;

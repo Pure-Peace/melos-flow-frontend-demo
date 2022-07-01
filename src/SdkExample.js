@@ -80,9 +80,12 @@ const melosMarketplaceSDKBuilded = buildSdk(melosMarketplaceSDK);
 const melosNftSDKBuilded = buildSdk(melosNftSDK);
 const commonSDKBuilded = buildSdk(commonSDK);
 
-const SdkExample = () => {
+const SdkExample = ({ useAuth }) => {
+  const [auth, setAuth] = useAuth();
   const [user, setUser] = useState({});
   const [sdkFuncParams, setSdkFuncParams] = useState({});
+
+  const hasAuth = () => !!auth.current.auth || !!user?.addr;
 
   useEffect(
     () => fcl.currentUser().subscribe((user) => setUser({ ...user })),
@@ -121,7 +124,7 @@ const SdkExample = () => {
         acc.push(param);
         return acc;
       },
-      execType === "transactions" ? [fcl.authz] : []
+      execType === "transactions" ? [auth.current.auth || fcl.authz] : []
     );
     console.log("params: ", params, "schemas: ", schemas);
     setStatus(`Executing ${execType} "${name}"...`);
@@ -165,16 +168,14 @@ const SdkExample = () => {
           return acc;
         }, {});
       }
-    } catch (_) {
-      console.error(_);
-    }
+    } catch (_) {}
     return (
       <Panel key={`${type}-${sdkName}-${name}`}>
         <Button
           onClick={async (event) => {
             await execWrapper(event, type, sdkName, name, method, schemas);
           }}
-          disabled={type === "transactions" && !isLogged()}
+          disabled={type === "transactions" && !hasAuth()}
         >
           {name}
         </Button>
@@ -184,7 +185,7 @@ const SdkExample = () => {
           return (
             <div key={funcKey} style={{ padding: "5px" }}>
               <Input
-                disabled={type === "transactions" && !isLogged()}
+                disabled={type === "transactions" && !hasAuth()}
                 onChange={(ev) =>
                   setSdkFuncParams({
                     ...sdkFuncParams,
@@ -225,8 +226,6 @@ const SdkExample = () => {
       </Card>
     );
   };
-
-  const isLogged = () => !!user?.addr;
 
   return (
     <div>

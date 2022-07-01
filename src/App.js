@@ -1,10 +1,10 @@
-import React from 'react';
-import styled from 'styled-components'
+import React, { useState } from "react";
+import styled from "styled-components";
 
-import GetLatestBlock from './GetLatestBlock'
-import Authenticate from './Authenticate'
-import SendTransaction from './SendTransaction'
-import SdkExample from './SdkExample'
+import GetLatestBlock from "./GetLatestBlock";
+import Authenticate from "./Authenticate";
+import SendTransaction from "./SendTransaction";
+import SdkExample from "./SdkExample";
 
 const Wrapper = styled.div`
   font-size: 13px;
@@ -12,10 +12,13 @@ const Wrapper = styled.div`
 `;
 
 function App() {
+  const [auth, setAuth] = useState({ current: {}, map: {} });
+  const useAuth = () => [auth, setAuth];
+
   return (
     <Wrapper>
-      <Authenticate />
-      <SdkExample />
+      <Authenticate useAuth={useAuth} />
+      <SdkExample useAuth={useAuth} />
     </Wrapper>
   );
 }
