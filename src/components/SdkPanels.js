@@ -108,7 +108,7 @@ export const SdkPanels = ({ auth, user, useConsole }) => {
         setLog(
           <div>{`Transaction "${tx.txId}" sended, waiting for seal...`}</div>
         );
-        result = await tx.seal();
+        result = (await tx.seal()).unwrap();
       }
 
       console.log("sdk result: ", result);
