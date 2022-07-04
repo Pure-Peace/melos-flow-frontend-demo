@@ -1488,10 +1488,10 @@
   resolved "https://registry.npmmirror.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@melosstudio/flow-sdk@1.1.19":
-  version "1.1.19"
-  resolved "https://registry.npmjs.org/@melosstudio/flow-sdk/-/flow-sdk-1.1.19.tgz#4bfe8540257d33a29f8f587001916660ea399362"
-  integrity sha512-vaTBssNqWAGxwbwbPEyRhgiro7qbOUWQZB3vUlQDwcn00DHTzot8MPKviqTCZLZirLu91ME7AM+Q26uqfHodpw==
+"@melosstudio/flow-sdk@1.1.20":
+  version "1.1.20"
+  resolved "https://registry.npmjs.org/@melosstudio/flow-sdk/-/flow-sdk-1.1.20.tgz#63f2c5359dd40c621c743ffc5e68cf9ad204678b"
+  integrity sha512-em9hHyOacwDtrzkof5wNBnl7FJjUeowaCPpf8A7c/XYU0/NBuyu4vSY/N/sfBNF6tywOSf2XbRBVRWGRl5t62w==
   dependencies:
     "@onflow/fcl" "^0.0.78"
     "@onflow/types" "0.0.6"

@@ -19,8 +19,8 @@ const {
   CommonSDK,
 } = require("@melosstudio/flow-sdk/dist/index.js");
 
-const MELOS_NFT_ADDRESS = "0x7b6d4c3338e215c0";
-const MELOS_MARKETPLACE = "0x7b6d4c3338e215c0";
+const MELOS_NFT_ADDRESS = "0x4e5683c08202d36f";
+const MELOS_MARKETPLACE = "0x4e5683c08202d36f";
 
 const TESTNET_ADDRESS_MAP = {
   ...TESTNET_BASE_ADDRESS_MAP,
